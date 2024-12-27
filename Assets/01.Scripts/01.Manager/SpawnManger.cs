@@ -8,7 +8,8 @@ public class SpawnTime
     public float MinTime;
     public float MaxTime;
 
-    public int enemyCount;
+    public int MinEnemyCount;
+    public int MaxEnemyCount;
     public GameObject[] SpawnEnemies;
 }
 
@@ -84,11 +85,11 @@ public class SpawnManger : MonoBehaviour
         _spawnTimer = 0f;
         GetSpawnTime();
 
-        for(int i = 0; i < _stepBySpawnTime[_curStep].enemyCount; i++)
+        for(int i = 0; i < Random.Range(_stepBySpawnTime[_curStep].MinEnemyCount, _stepBySpawnTime[_curStep].MaxEnemyCount+1); i++)
         {
             yield return new WaitForSeconds(0.3f);
             GameObject spawnEnemy = _stepBySpawnTime[_curStep].SpawnEnemies[Random.Range(0, _stepBySpawnTime[_curStep].SpawnEnemies.Length)];
-            Instantiate(spawnEnemy, _enemyParent);
+            Instantiate(spawnEnemy, _spawnPosition.position, Quaternion.identity, _enemyParent);
         }
     }
 }

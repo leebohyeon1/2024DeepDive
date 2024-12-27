@@ -104,10 +104,10 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!70 &7512721251271947588
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,4 +138,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 3
   _moveSpeed: 10
-  _attackDamage: 0
+  _attackDamage: 2
+  _attackRange: {x: 8, y: 8}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _attackCooldown: 1

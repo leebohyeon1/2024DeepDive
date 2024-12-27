@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
 
     [SerializeField]
     private int _maxHp = 0;
@@ -16,6 +17,14 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _attackDamage = 2;
+    [SerializeField]
+    private Vector2 _attackRange;  // 공격 범위
+    [SerializeField] 
+    private LayerMask _enemyLayer;      // 공격할 대상 (적 레이어)
+    [SerializeField] 
+    private float _attackCooldown = 0.5f; // 공격 쿨타임
+
+    private float _lastAttackTime = 0f;
 
     private bool _canInteract = false;
     private Transform[] _eventObjs;
@@ -33,6 +42,17 @@ public class Player : MonoBehaviour
         {
             Interact();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (Time.time >= _lastAttackTime + _attackCooldown)
+            {
+                Debug.Log("공격");
+                PerformAttack();
+                _lastAttackTime = Time.time;
+            }
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,11 +71,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + new Vector3((_spriteRenderer.flipX == true? 1 : -1) * (_attackRange.x / 2), 0f ), _attackRange);
+    }
 
     private void InitialPlayer()
     {
         _rb = GetComponent<Rigidbody2D>();
-
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _curHp = _maxHp;
 
@@ -72,6 +97,15 @@ public class Player : MonoBehaviour
 
         _rb.velocity = new Vector2(_velocity * _moveSpeed, 0);
 
+        if(_velocity == 1)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else if(_velocity == -1)
+        {
+            _spriteRenderer.flipX = false;
+        }
+
     }
 
     private void Interact()
@@ -81,16 +115,6 @@ public class Player : MonoBehaviour
         InteractableObject interactable = eventObj.GetComponent<InteractableObject>();
 
         Debug.Log(eventObj.name);
-    }
-
-    public void TakeDamage(int damage)
-    {
-        _curHp -= damage;
-
-        if (_curHp <= 0) 
-        {
-            EventManager.Instance.PostNotification(EVENT_TYPE.GAME_OVER, this);
-        }
     }
 
     private GameObject CalcurateDistance()
@@ -114,4 +138,31 @@ public class Player : MonoBehaviour
 
         return closestObj;
     }
+
+    private void PerformAttack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(transform.position + 
+            new Vector3((_spriteRenderer.flipX == true ? 1 : -1) * (_attackRange.x / 2), 0f), _attackRange, 0,_enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Enemy damageable = enemy.GetComponent<Enemy>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(_attackDamage);
+            }
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _curHp -= damage;
+
+        if (_curHp <= 0) 
+        {
+            EventManager.Instance.PostNotification(EVENT_TYPE.GAME_OVER, this);
+        }
+    }
+
+   
 }

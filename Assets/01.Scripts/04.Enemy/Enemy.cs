@@ -36,5 +36,15 @@ public class Enemy : MonoBehaviour
         _rb.velocity = new Vector2(_moveSpeed, _rb.velocity.y);
     }
 
+    public virtual void TakeDamage(int damage)
+    {
+        _curHp -= damage;
+
+        if(_curHp <= 0 )
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
 }
