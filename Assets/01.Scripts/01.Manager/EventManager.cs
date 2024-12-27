@@ -17,14 +17,27 @@ public interface IListener
     void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null);
 }
 
-public class EventManager : Singleton<EventManager>
+public class EventManager : MonoBehaviour
 {
+    public static EventManager Instance { get; private set; }
     //=========================================================
 
     public delegate void OnEvent(EVENT_TYPE Event_, Component Sender, object Param = null);
     private Dictionary<EVENT_TYPE, List<IListener>> Listeners =
         new Dictionary<EVENT_TYPE, List<IListener>>();
     //=========================================================
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            DestroyImmediate(gameObject);
+        }
+    }
+
 
     //리스트에 리스너 오브젝트 추가
     public void AddListener(EVENT_TYPE Event_Type, IListener Listener)
@@ -96,13 +109,13 @@ public class EventManager : Singleton<EventManager>
         RemoveRedundancies(); //딕셔너리 청소
     }
 
-    protected override void OnEnable()
+    private void OnEnable()
     {
         // SceneManager.sceneLoaded 이벤트에 OnSceneLoaded 메서드를 구독.
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    protected override void OnDisable()
+    private void OnDisable()
     {
         // SceneManager.sceneLoaded 이벤트에서 OnSceneLoaded 메서드를 구독 해제.
         SceneManager.sceneLoaded -= OnSceneLoaded;

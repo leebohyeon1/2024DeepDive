@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>, IListener
+public class GameManager : MonoBehaviour, IListener
 {
-    [SerializeField]
+    public static GameManager Instance { get; private set; }
+
+   [SerializeField]
     private int _princessAngryRate;
 
     [SerializeField]
@@ -20,12 +22,24 @@ public class GameManager : Singleton<GameManager>, IListener
     private int _InteractCount;
     private float _gametime;
 
-    protected override void Start()
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            DestroyImmediate(gameObject);
+        }
+    }
+
+    private void Start()
     {
         InitialGame();
     }
 
-    protected override void Update()
+    private void Update()
     {
         if (_isGameOver)
         {
