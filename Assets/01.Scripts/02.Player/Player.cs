@@ -21,19 +21,19 @@ public class Player : MonoBehaviour, IListener
     private int _attackDamage = 2;
     [SerializeField]
     private Vector2 _attackRange;  // 공격 범위
-    [SerializeField] 
+    [SerializeField]
     private LayerMask _enemyLayer;      // 공격할 대상 (적 레이어)
-    [SerializeField] 
+    [SerializeField]
     private float _attackCooldown = 0.5f; // 공격 쿨타임
 
     private float _lastAttackTime = 0f;
 
     private bool _canInteract = false;
-    private bool _isAttack = false; 
-
+    private bool _isAttack = false;
+    private bool _isInteracting = false; // 상호작용 상태 플래그
 
     private Transform[] _eventObjs;
-   
+
     private void Start()
     {
         InitialPlayer();
@@ -41,20 +41,17 @@ public class Player : MonoBehaviour, IListener
 
     private void Update()
     {
-
-        if(_playerEventInteract.IsInteract || _isAttack)
+        if (_playerEventInteract.IsInteract || _isAttack || _isInteracting)
         {
             return;
         }
 
-        Move();
-
-        if (_canInteract && Input.GetKeyDown(KeyCode.E)) 
+        if (_canInteract && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
+            return;
         }
-
-        if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
             if (Time.time >= _lastAttackTime + _attackCooldown)
             {
@@ -62,13 +59,17 @@ public class Player : MonoBehaviour, IListener
                 PerformAttack();
                 _lastAttackTime = Time.time;
             }
+            return;
         }
+
+
+        Move();
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Interactable"))
+        if (collision.CompareTag("Interactable"))
         {
             _canInteract = true;
         }
@@ -85,11 +86,11 @@ public class Player : MonoBehaviour, IListener
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if(_spriteRenderer == null)
+        if (_spriteRenderer == null)
         {
             return;
         }
-        Gizmos.DrawWireCube(transform.position + new Vector3((_spriteRenderer.flipX == true? 1 : -1) * (_attackRange.x / 2), 0f ), _attackRange);
+        Gizmos.DrawWireCube(transform.position + new Vector3((_spriteRenderer.flipX == true ? 1 : -1) * (_attackRange.x / 2), 0f), _attackRange);
     }
 
     private void InitialPlayer()
@@ -114,6 +115,8 @@ public class Player : MonoBehaviour, IListener
     {
         _playerEventInteract.SetInteract(false);
         _playerEventInteract.TriggerGameOver();
+        _animator.SetTrigger("EndAction");
+        _isInteracting = false; // 상호작용 종료
     }
 
     private void Move()
@@ -122,12 +125,12 @@ public class Player : MonoBehaviour, IListener
 
         _rb.velocity = new Vector2(_velocity * _moveSpeed, 0);
 
-        if(_velocity == 1)
+        if (_velocity == 1)
         {
             _spriteRenderer.flipX = true;
             _animator.SetBool("IsMove", true);
         }
-        else if(_velocity == -1)
+        else if (_velocity == -1)
         {
             _spriteRenderer.flipX = false;
             _animator.SetBool("IsMove", true);
@@ -145,11 +148,14 @@ public class Player : MonoBehaviour, IListener
 
         InteractableObject interactable = eventObj.GetComponent<InteractableObject>();
 
-        if(interactable.CanInteract)
+        if (interactable.CanInteract)
         {
+            _animator.SetTrigger("Action");
             _rb.velocity = Vector2.zero;
+            transform.position = new Vector2(eventObj.transform.position.x, transform.position.y);
             _playerEventInteract.SetInteract(true);
             _playerEventInteract.SetInteractType(interactable.InteractType);
+            _isInteracting = true; // 상호작용 중 플래그 설정
         }
     }
 
@@ -181,8 +187,8 @@ public class Player : MonoBehaviour, IListener
         _rb.velocity = Vector2.zero;
         _animator.SetTrigger("Attack");
 
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(transform.position + 
-            new Vector3((_spriteRenderer.flipX == true ? 1 : -1) * (_attackRange.x / 2), 0f), _attackRange, 0,_enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(transform.position +
+            new Vector3((_spriteRenderer.flipX == true ? 1 : -1) * (_attackRange.x / 2), 0f), _attackRange, 0, _enemyLayer);
 
         foreach (Collider2D enemy in hitEnemies)
         {
@@ -203,7 +209,7 @@ public class Player : MonoBehaviour, IListener
     {
         _curHp -= damage;
 
-        if (_curHp <= 0) 
+        if (_curHp <= 0)
         {
             EventManager.Instance.PostNotification(EVENT_TYPE.GAME_OVER, this);
         }
@@ -213,5 +219,4 @@ public class Player : MonoBehaviour, IListener
     {
         _isAttack = false;
     }
-
 }

@@ -217,6 +217,7 @@ public class PlayerEventInteract : MonoBehaviour
     {
         IsInteract = false;
         GameManager.Instance.IncreaseInteractCount();
+        EventManager.Instance.PostNotification(EVENT_TYPE.STOP_INTERACT, this);
     }
 
     public void SetUI(Slider cookSlider, RectTransform targetZone, Slider washSlider, Slider babySlider)

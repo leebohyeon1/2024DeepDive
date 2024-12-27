@@ -13,13 +13,21 @@ public class Knight : Enemy
     [SerializeField]
     private float _knockbackTime;
 
+    protected override void Start()
+    {
+        base.Start();
+        _animator.SetBool("IsMove", true);
+    }
+
     protected override void Move()
     {
         if(_isKnockedBack)
         {
+            _animator.speed = 0;
             return;
         }
 
+        _animator.speed = 1;
         base.Move();
     }
 
