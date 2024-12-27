@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private PlayerEventInteract _playerEventInteract;
 
     [SerializeField]
     private int _maxHp = 0;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     private float _lastAttackTime = 0f;
 
     private bool _canInteract = false;
+ 
     private Transform[] _eventObjs;
    
     private void Start()
@@ -36,6 +38,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+
+        if(_playerEventInteract.IsInteract)
+        {
+            return;
+        }
+
         Move();
 
         if (_canInteract && Input.GetKeyDown(KeyCode.E)) 
@@ -74,6 +82,10 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
+        if(_spriteRenderer == null)
+        {
+            return;
+        }
         Gizmos.DrawWireCube(transform.position + new Vector3((_spriteRenderer.flipX == true? 1 : -1) * (_attackRange.x / 2), 0f ), _attackRange);
     }
 
@@ -81,6 +93,7 @@ public class Player : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _playerEventInteract = GetComponent<PlayerEventInteract>();
 
         _curHp = _maxHp;
 
@@ -114,7 +127,11 @@ public class Player : MonoBehaviour
 
         InteractableObject interactable = eventObj.GetComponent<InteractableObject>();
 
-        Debug.Log(eventObj.name);
+        if(interactable.CanInteract)
+        {
+            _playerEventInteract.SetInteract(true);
+            _playerEventInteract.SetInteractType(interactable.InteractType);
+        }
     }
 
     private GameObject CalcurateDistance()
@@ -146,6 +163,11 @@ public class Player : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
+            if (enemy.GetComponent<FireBall>() != null)
+            {
+                Destroy(enemy.gameObject);
+            }
+
             Enemy damageable = enemy.GetComponent<Enemy>();
             if (damageable != null)
             {

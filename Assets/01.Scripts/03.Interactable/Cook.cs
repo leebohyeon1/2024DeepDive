@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class Cook : InteractableObject
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 }

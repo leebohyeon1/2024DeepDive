@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class BabySeat : InteractableObject
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 }

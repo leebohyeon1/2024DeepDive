@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class WashDishes : InteractableObject
 {
-    void Start()
-    {
-        
-    }
 
-    void Update()
-    {
-        
-    }
 }

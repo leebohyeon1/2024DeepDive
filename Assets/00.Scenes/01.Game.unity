@@ -220,7 +220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fd1f4cd571ff44194e31aa19f01a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventType: 0
+  InteractType: 0
+  _interactTimes:
+  - MinTime: 10
+    MaxTime: 15
+    WaitTime: 15
+    AngryRate: 0
+  _increaseStepTime: 0
 --- !u!1 &139646558
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +324,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b75a5daa8678d42886b10cd032c185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventType: 0
+  InteractType: 0
+  _interactTimes:
+  - MinTime: 10
+    MaxTime: 15
+    WaitTime: 15
+    AngryRate: 0
+  _increaseStepTime: 0
 --- !u!1 &146560648
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +428,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bceed7c81a11b2a45bd4ea636d1870b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventType: 0
+  InteractType: 0
+  _interactTimes:
+  - MinTime: 10
+    MaxTime: 15
+    WaitTime: 15
+    AngryRate: 0
+  _increaseStepTime: 0
 --- !u!1 &215381120
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,6 +680,7 @@ MonoBehaviour:
     MaxEnemyCount: 2
     SpawnEnemies:
     - {fileID: 820123807230834798, guid: 9151b5c48a2f42946827acd5b09e73c7, type: 3}
+    - {fileID: 139644336820152408, guid: 412c61bf455336840957b389053a7391, type: 3}
   _increaseStepTime: 10
 --- !u!1 &519420028
 GameObject:

@@ -56,9 +56,14 @@ public class GameManager : Singleton<GameManager>, IListener
     }
 
 
-    private void Angry()
+    public void Angry(int rate )
     {
+        _princessAngryRate += rate;
 
+        if(_princessAngryRate >= 100)
+        {
+            GameOver();
+        }
     }
 
     public Transform[] GetEventObjs()
@@ -77,3 +82,4 @@ public class GameManager : Singleton<GameManager>, IListener
     }
 
 }
+
