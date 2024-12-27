@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>, IListener
+public class GameManager : MonoBehaviour, IListener
 {
-    [SerializeField]
+    public static GameManager Instance { get; private set; }
+
+   [SerializeField]
     private int _princessAngryRate;
 
     [SerializeField]
@@ -16,14 +18,35 @@ public class GameManager : Singleton<GameManager>, IListener
     private int _houseHp = 0;
     private int _curHouseHp = 0;
 
-    protected override void Start()
+    private int _killCount;
+    private int _InteractCount;
+    private float _gametime;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            DestroyImmediate(gameObject);
+        }
+    }
+
+    private void Start()
     {
         InitialGame();
     }
 
-    protected override void Update()
+    private void Update()
     {
-        
+        if (_isGameOver)
+        {
+            return;
+        }
+
+        _gametime += Time.deltaTime;
     }
 
     private void InitialGame()
@@ -41,12 +64,12 @@ public class GameManager : Singleton<GameManager>, IListener
                 GameOver();
                 break;
         }
-        
+
     }
 
     private void GameOver()
     {
-        if(_isGameOver)
+        if (_isGameOver)
         {
             return;
         }
@@ -56,11 +79,11 @@ public class GameManager : Singleton<GameManager>, IListener
     }
 
 
-    public void Angry(int rate )
+    public void Angry(int rate)
     {
         _princessAngryRate += rate;
 
-        if(_princessAngryRate >= 100)
+        if (_princessAngryRate >= 100)
         {
             GameOver();
         }
@@ -75,11 +98,20 @@ public class GameManager : Singleton<GameManager>, IListener
     {
         _curHouseHp -= damage;
 
-        if(_curHouseHp <= 0)
+        if (_curHouseHp <= 0)
         {
             GameOver();
         }
     }
 
+    public void IncreaseInteractCount()
+    {
+        _InteractCount++;
+    }
+
+    public void IncreaseKillCount()
+    {
+        _killCount++;
+    }
 }
 

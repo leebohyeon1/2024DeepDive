@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected Rigidbody2D _rb;
+    protected Animator _animator;
 
     [SerializeField]
     protected int _maxHp = 0;
@@ -28,6 +29,8 @@ public class Enemy : MonoBehaviour
     protected virtual void InitialEnemy()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+
         _curHp = _maxHp;
     }
 
@@ -43,6 +46,7 @@ public class Enemy : MonoBehaviour
         if(_curHp <= 0 )
         {
             Destroy(gameObject);
+            GameManager.Instance.IncreaseKillCount();
         }
     }
 
