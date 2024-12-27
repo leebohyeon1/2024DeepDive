@@ -7,6 +7,9 @@ public class SpawnTime
 {
     public float MinTime;
     public float MaxTime;
+
+    public int enemyCount;
+    public GameObject[] SpawnEnemies;
 }
 
 public class SpawnManger : MonoBehaviour
@@ -22,7 +25,12 @@ public class SpawnManger : MonoBehaviour
     private int _curStep = 0;
     private float _spawnTime = 3f;
     private float _spawnTimer = 0f;
-    
+
+    [SerializeField]
+    private float _increaseStepTime;
+    private float _stepTimer = 0f;
+    private bool _isMaxLevel = false;
+
     private void Start()
     {
         GetSpawnTime();
@@ -33,8 +41,32 @@ public class SpawnManger : MonoBehaviour
         _spawnTimer += Time.deltaTime;
         if(_spawnTimer >= _spawnTime)
         {
-            Spawn();
+           StartCoroutine(Spawn());
         }
+
+        if(_isMaxLevel)
+        {
+            return;
+        }
+
+        _stepTimer += Time.deltaTime;
+        if(_stepTimer >= _increaseStepTime)
+        {
+            NextStep();
+        }
+    }
+
+    private void NextStep()
+    {
+        if (_curStep >= _stepBySpawnTime.Length - 1)
+        {
+            _isMaxLevel = true;
+            return;
+        }
+
+        _stepTimer = 0f;
+        _curStep++;
+
     }
 
     private void GetSpawnTime()
@@ -47,11 +79,16 @@ public class SpawnManger : MonoBehaviour
         _spawnTime = time;
     }
     
-    private void Spawn()
+    private IEnumerator Spawn()
     {
         _spawnTimer = 0f;
         GetSpawnTime();
 
-        Debug.Log("Spawn");
+        for(int i = 0; i < _stepBySpawnTime[_curStep].enemyCount; i++)
+        {
+            yield return new WaitForSeconds(0.3f);
+            GameObject spawnEnemy = _stepBySpawnTime[_curStep].SpawnEnemies[Random.Range(0, _stepBySpawnTime[_curStep].SpawnEnemies.Length)];
+            Instantiate(spawnEnemy, _enemyParent);
+        }
     }
 }

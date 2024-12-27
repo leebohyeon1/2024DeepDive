@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     {
         _velocity = Input.GetAxisRaw("Horizontal");
 
-        _rb.velocity = new Vector3(_velocity * _moveSpeed, 0, 0);
+        _rb.velocity = new Vector2(_velocity * _moveSpeed, 0);
 
     }
 
