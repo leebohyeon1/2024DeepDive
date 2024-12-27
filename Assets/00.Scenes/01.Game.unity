@@ -771,7 +771,7 @@ MonoBehaviour:
     MinEnemyCount: 1
     MaxEnemyCount: 2
     SpawnEnemies:
-    - {fileID: 820123807230834798, guid: 9151b5c48a2f42946827acd5b09e73c7, type: 3}
+    - {fileID: 139644336820152408, guid: 412c61bf455336840957b389053a7391, type: 3}
     - {fileID: 139644336820152408, guid: 5ce14d5819f2ae84888a3e0a59e12afc, type: 3}
     - {fileID: 139644336820152408, guid: f0e924f8e33cdba41889fb2275791afe, type: 3}
   _increaseStepTime: 10
