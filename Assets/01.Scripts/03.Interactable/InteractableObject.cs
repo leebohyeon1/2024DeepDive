@@ -13,7 +13,7 @@ public class InteractTime
     public int AngryRate;
 }
 
-public class InteractableObject : MonoBehaviour
+public class InteractableObject : MonoBehaviour, IListener
 {
     public int InteractType = 0;
 
@@ -38,12 +38,13 @@ public class InteractableObject : MonoBehaviour
     protected virtual void Start()
     {
         SetEventTime();
+
     }
 
     protected virtual void Update()
     {
         _interactTimer += Time.deltaTime;
-        if(!CanInteract && _interactTimer >= _interactTime)
+        if(!CanInteract && !_waiting && _interactTimer >= _interactTime)
         {
             _interactTimer = 0f;
             SetEventTime();
@@ -61,8 +62,7 @@ public class InteractableObject : MonoBehaviour
             _waitTimer += Time.deltaTime;
             if (_waitTimer >= _interactTimes[_curStep].WaitTime)
             {
-                GameManager.Instance.Angry(_interactTimes[_curStep].AngryRate);
-                _waiting = false;
+                Failed();
             }
         }
 
@@ -79,8 +79,14 @@ public class InteractableObject : MonoBehaviour
 
     }
 
+    public virtual void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
+    {
+        Clear();
+    }
+
     public virtual void Interact()
     {
+        CanInteract = false;
 
     }
 
@@ -100,5 +106,20 @@ public class InteractableObject : MonoBehaviour
         _increaseStepTimer = 0f;
         _curStep++;
 
+    }
+
+
+    protected virtual void Failed()
+    {
+        GameManager.Instance.Angry(_interactTimes[_curStep].AngryRate);
+        _waiting = false;
+
+        EventManager.Instance.PostNotification(EVENT_TYPE.STOP_INTERACT, this);
+    }
+
+    protected virtual void Clear()
+    {
+        CanInteract = false;
+        _waiting = false;
     }
 }

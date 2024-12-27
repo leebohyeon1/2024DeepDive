@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 public enum EVENT_TYPE
 {
     GAME_OVER,
-    PRINCESS_ANGRY
+    PRINCESS_ANGRY,
+    WASH_DISHES,
+    BABY_SEAT,
+    COOK,
+    STOP_INTERACT
 };
 public interface IListener
 {

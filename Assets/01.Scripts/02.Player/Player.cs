@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IListener
 {
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
@@ -29,7 +29,9 @@ public class Player : MonoBehaviour
     private float _lastAttackTime = 0f;
 
     private bool _canInteract = false;
- 
+    private bool _isAttack = false; 
+
+
     private Transform[] _eventObjs;
    
     private void Start()
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        if(_playerEventInteract.IsInteract)
+        if(_playerEventInteract.IsInteract || _isAttack)
         {
             return;
         }
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour
         {
             if (Time.time >= _lastAttackTime + _attackCooldown)
             {
-                Debug.Log("АјАн");
+                _isAttack = true;
                 PerformAttack();
                 _lastAttackTime = Time.time;
             }
@@ -102,8 +104,14 @@ public class Player : MonoBehaviour
         _eventObjs = new Transform[GameManager.Instance.GetEventObjs().Length];
         _eventObjs = GameManager.Instance.GetEventObjs();
 
+        EventManager.Instance.AddListener(EVENT_TYPE.STOP_INTERACT, this);
 
+    }
 
+    public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
+    {
+        _playerEventInteract.SetInteract(false);
+        _playerEventInteract.TriggerGameOver();
     }
 
     private void Move()
@@ -137,6 +145,7 @@ public class Player : MonoBehaviour
 
         if(interactable.CanInteract)
         {
+
             _playerEventInteract.SetInteract(true);
             _playerEventInteract.SetInteractType(interactable.InteractType);
         }
@@ -166,6 +175,10 @@ public class Player : MonoBehaviour
 
     private void PerformAttack()
     {
+        _isAttack = true;
+        _rb.velocity = Vector2.zero;
+        _animator.SetTrigger("Attack");
+
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(transform.position + 
             new Vector3((_spriteRenderer.flipX == true ? 1 : -1) * (_attackRange.x / 2), 0f), _attackRange, 0,_enemyLayer);
 
@@ -194,5 +207,9 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+    public void EndAttack()
+    {
+        _isAttack = false;
+    }
+
 }

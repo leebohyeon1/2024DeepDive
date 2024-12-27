@@ -16,6 +16,10 @@ public class GameManager : Singleton<GameManager>, IListener
     private int _houseHp = 0;
     private int _curHouseHp = 0;
 
+    private int _killCount;
+    private int _InteractCount;
+    private float _gametime;
+    
     protected override void Start()
     {
         InitialGame();
