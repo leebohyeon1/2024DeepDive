@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy_Moving_1
+  m_Name: Enemy_Wizard_Moving_Yellow
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1046108954, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
+      value: {fileID: 2040852495, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
     - time: 0.083333336
-      value: {fileID: -1452404648, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
+      value: {fileID: 1074599853, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
     - time: 0.16666667
-      value: {fileID: 1081962639, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
+      value: {fileID: 1753889054, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
     - time: 0.25
-      value: {fileID: -1162666818, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
+      value: {fileID: 800146443, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,10 +46,10 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1046108954, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
-    - {fileID: -1452404648, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
-    - {fileID: 1081962639, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
-    - {fileID: -1162666818, guid: 4e79bc3b13b95c048a95d898e02d2a97, type: 3}
+    - {fileID: 2040852495, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
+    - {fileID: 1074599853, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
+    - {fileID: 1753889054, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
+    - {fileID: 800146443, guid: 995780ba4e2eac24bb4811c994897680, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

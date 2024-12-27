@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Wizard : Enemy
 {
+
+
     [SerializeField]
     private float _attackRange = 5f;
     [SerializeField]
@@ -34,6 +36,7 @@ public class Wizard : Enemy
         // 레이에 감지된 경우
         if (hit.collider != null)
         {
+            _animator.SetBool("IsMove", false);
             StopMoving();
 
             // 쿨타임 확인 후 공격
@@ -45,6 +48,7 @@ public class Wizard : Enemy
         }
         else
         {
+            _animator.SetBool("IsMove", true);
             Move(); 
         }
     }
