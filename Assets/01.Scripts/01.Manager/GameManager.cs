@@ -12,6 +12,10 @@ public class GameManager : Singleton<GameManager>, IListener
 
     private bool _isGameOver = false;
 
+    [SerializeField]
+    private int _houseHp = 0;
+    private int _curHouseHp = 0;
+
     protected override void Start()
     {
         InitialGame();

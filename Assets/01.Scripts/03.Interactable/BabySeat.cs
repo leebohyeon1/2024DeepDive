@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BabySeat : MonoBehaviour
+public class BabySeat : InteractableObject
 {
     void Start()
     {
