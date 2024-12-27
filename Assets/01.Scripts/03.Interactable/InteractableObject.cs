@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class InteractTime
@@ -34,11 +35,12 @@ public class InteractableObject : MonoBehaviour, IListener
     private float _waitTimer = 0f;  // WaitTime 타이머
     private bool _waiting = false;  // WaitTime 대기 상태 플래그
 
+    public Slider Slider;
 
     protected virtual void Start()
     {
         SetEventTime();
-
+        Slider.gameObject.SetActive(false);
     }
 
     protected virtual void Update()
@@ -82,12 +84,6 @@ public class InteractableObject : MonoBehaviour, IListener
     public virtual void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
         Clear();
-    }
-
-    public virtual void Interact()
-    {
-        CanInteract = false;
-
     }
 
     protected virtual void SetEventTime()

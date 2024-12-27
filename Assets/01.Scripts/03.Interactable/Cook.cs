@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cook : InteractableObject
 {
+    public RectTransform TargetZone;
     protected override void Start()
     {
         base.Start();

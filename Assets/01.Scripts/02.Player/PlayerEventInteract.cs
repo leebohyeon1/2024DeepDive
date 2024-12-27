@@ -10,14 +10,13 @@ public class PlayerEventInteract : MonoBehaviour
     private int _interactType = 0;
 
     [Header("요리")]
-    [SerializeField] 
-    private Slider _cookSlider; // 슬라이더 UI
-    [SerializeField] 
-    private RectTransform _targetZone; // 랜덤 범위 UI
-    [SerializeField] 
+    [SerializeField]
     private float _sliderSpeed = 2f;
     [SerializeField]
     private float _cookRange = 0.1f;
+
+    private Slider _cookSlider; // 슬라이더 UI
+    private RectTransform _targetZone; // 랜덤 범위 UI
 
     private float _sliderValue = 0f;
     private float _direction = 1f;
@@ -30,9 +29,12 @@ public class PlayerEventInteract : MonoBehaviour
     private float _decreaseRate = 10f; // 초당 감소량
     [SerializeField]
     private float _increasePerPress = 10f; // 연타 시 증가량
+
+    private Slider _washSlider; // 슬라이더 UI
+
     private float _gauge = 10f;
     private float _maxGauge = 100f;
-  
+
 
 
     [Space(20f), Header("아기 달래기")]
@@ -40,11 +42,7 @@ public class PlayerEventInteract : MonoBehaviour
     private float _targetHoldTime = 3f; // 3초
     private float _holdTime = 0f;
 
-
-    void Start()
-    {
-        _cookSlider.gameObject.SetActive(false); // 초기에 슬라이더 비활성화
-    }
+    private Slider _babySlider; // 슬라이더 UI
 
     void Update()
     {
@@ -65,6 +63,14 @@ public class PlayerEventInteract : MonoBehaviour
         if ( _interactType == 0)
         {
             StartCook();  // 미니게임 0 시작
+        }
+        else if(_interactType == 1)
+        {
+            _washSlider.gameObject.SetActive(true);
+        }
+        else
+        {
+            _babySlider.gameObject.SetActive(true);
         }
     }
 
@@ -127,6 +133,7 @@ public class PlayerEventInteract : MonoBehaviour
         // 시각적으로 범위 표시 (RectTransform 조절)
         SetTargetZoneUI();
     }
+
     // 범위 표시
     private void SetTargetZoneUI()
     {
@@ -148,11 +155,16 @@ public class PlayerEventInteract : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             _gauge += _increasePerPress;
+
             if (_gauge > _maxGauge)
             {
                 TriggerGameClear();
                 EventManager.Instance.PostNotification(EVENT_TYPE.WASH_DISHES, this);
                 _gauge = 10;
+
+                _washSlider.value = _gauge / 100;
+                _washSlider.gameObject.SetActive(false);
+                return;
             }
         }
 
@@ -162,6 +174,8 @@ public class PlayerEventInteract : MonoBehaviour
         {
             _gauge = 0;
         }
+
+        _washSlider.value = _gauge / 100;
     }
 
     private void BabySeating()
@@ -175,6 +189,7 @@ public class PlayerEventInteract : MonoBehaviour
             {
                 _holdTime = 0;
                 TriggerGameClear();
+                _babySlider.gameObject.SetActive(false);
                 EventManager.Instance.PostNotification(EVENT_TYPE.BABY_SEAT, this);
             }
         }
@@ -182,6 +197,8 @@ public class PlayerEventInteract : MonoBehaviour
         {
             _holdTime = 0;
         }
+
+        _babySlider.value = _holdTime / _targetHoldTime;
     }
 
     public void TriggerGameOver()
@@ -190,11 +207,23 @@ public class PlayerEventInteract : MonoBehaviour
 
         _gauge = 10;
         _holdTime = 0;
+
+        _cookSlider.gameObject.SetActive(false);
+        _washSlider.gameObject.SetActive(false);
+        _babySlider.gameObject.SetActive(false);
     }
 
     private void TriggerGameClear()
     {
         IsInteract = false;
         GameManager.Instance.IncreaseInteractCount();
+    }
+
+    public void SetUI(Slider cookSlider, RectTransform targetZone, Slider washSlider, Slider babySlider)
+    {
+        _cookSlider = cookSlider;
+        _targetZone = targetZone;
+        _washSlider = washSlider;
+        _babySlider = babySlider;
     }
 }

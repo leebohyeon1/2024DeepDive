@@ -103,6 +103,8 @@ public class Player : MonoBehaviour, IListener
 
         _eventObjs = new Transform[GameManager.Instance.GetEventObjs().Length];
         _eventObjs = GameManager.Instance.GetEventObjs();
+        _playerEventInteract.SetUI(_eventObjs[0].GetComponent<InteractableObject>().Slider, _eventObjs[0].GetComponent<Cook>().TargetZone
+            , _eventObjs[1].GetComponent<InteractableObject>().Slider, _eventObjs[2].GetComponent<InteractableObject>().Slider);
 
         EventManager.Instance.AddListener(EVENT_TYPE.STOP_INTERACT, this);
 
@@ -145,7 +147,7 @@ public class Player : MonoBehaviour, IListener
 
         if(interactable.CanInteract)
         {
-
+            _rb.velocity = Vector2.zero;
             _playerEventInteract.SetInteract(true);
             _playerEventInteract.SetInteractType(interactable.InteractType);
         }
