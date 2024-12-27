@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public enum EVENT_TYPE
 {
     GAME_OVER,
+    PRINCESS_ANGRY
 };
 public interface IListener
 {

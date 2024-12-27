@@ -10,31 +10,33 @@ public class SpawnTime
 
     public int MinEnemyCount;
     public int MaxEnemyCount;
+
     public GameObject[] SpawnEnemies;
 }
 
 public class SpawnManger : MonoBehaviour
 {
     [SerializeField]
-    private Transform _spawnPosition;
+    private Transform _spawnPosition; // 적 스폰 위치
     [SerializeField]
-    private Transform _enemyParent;
+    private Transform _enemyParent; 
 
     [SerializeField]
-    private SpawnTime[] _stepBySpawnTime;
+    private SpawnTime[] _stepBySpawnTime; // 스텝별 적 스폰 시간
 
-    private int _curStep = 0;
-    private float _spawnTime = 3f;
+    private int _curStep = 0; // 현재 스텝
+
+    private float _spawnTime = 3f; // 스폰 시간
     private float _spawnTimer = 0f;
 
     [SerializeField]
-    private float _increaseStepTime;
+    private float _increaseStepTime; // 스텝 증가 시간
     private float _stepTimer = 0f;
-    private bool _isMaxLevel = false;
+    private bool _isMaxStep = false;
 
     private void Start()
     {
-        GetSpawnTime();
+        SetSpawnTime();
     }
 
     private void Update()
@@ -45,7 +47,7 @@ public class SpawnManger : MonoBehaviour
            StartCoroutine(Spawn());
         }
 
-        if(_isMaxLevel)
+        if(_isMaxStep)
         {
             return;
         }
@@ -61,7 +63,7 @@ public class SpawnManger : MonoBehaviour
     {
         if (_curStep >= _stepBySpawnTime.Length - 1)
         {
-            _isMaxLevel = true;
+            _isMaxStep = true;
             return;
         }
 
@@ -70,7 +72,7 @@ public class SpawnManger : MonoBehaviour
 
     }
 
-    private void GetSpawnTime()
+    private void SetSpawnTime()
     {
         float minTime = _stepBySpawnTime[_curStep].MinTime; 
         float maxTime = _stepBySpawnTime[_curStep].MaxTime;
@@ -83,7 +85,7 @@ public class SpawnManger : MonoBehaviour
     private IEnumerator Spawn()
     {
         _spawnTimer = 0f;
-        GetSpawnTime();
+        SetSpawnTime();
 
         for(int i = 0; i < Random.Range(_stepBySpawnTime[_curStep].MinEnemyCount, _stepBySpawnTime[_curStep].MaxEnemyCount+1); i++)
         {
