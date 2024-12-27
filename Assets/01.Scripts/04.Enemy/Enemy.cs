@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
         if(_curHp <= 0 )
         {
             Destroy(gameObject);
+            GameManager.Instance.IncreaseKillCount();
         }
     }
 

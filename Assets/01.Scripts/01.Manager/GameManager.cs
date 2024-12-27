@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>, IListener
     private int _killCount;
     private int _InteractCount;
     private float _gametime;
-    
+
     protected override void Start()
     {
         InitialGame();
@@ -27,7 +27,12 @@ public class GameManager : Singleton<GameManager>, IListener
 
     protected override void Update()
     {
-        
+        if (_isGameOver)
+        {
+            return;
+        }
+
+        _gametime += Time.deltaTime;
     }
 
     private void InitialGame()
@@ -45,12 +50,12 @@ public class GameManager : Singleton<GameManager>, IListener
                 GameOver();
                 break;
         }
-        
+
     }
 
     private void GameOver()
     {
-        if(_isGameOver)
+        if (_isGameOver)
         {
             return;
         }
@@ -60,11 +65,11 @@ public class GameManager : Singleton<GameManager>, IListener
     }
 
 
-    public void Angry(int rate )
+    public void Angry(int rate)
     {
         _princessAngryRate += rate;
 
-        if(_princessAngryRate >= 100)
+        if (_princessAngryRate >= 100)
         {
             GameOver();
         }
@@ -79,11 +84,20 @@ public class GameManager : Singleton<GameManager>, IListener
     {
         _curHouseHp -= damage;
 
-        if(_curHouseHp <= 0)
+        if (_curHouseHp <= 0)
         {
             GameOver();
         }
     }
 
+    public void IncreaseInteractCount()
+    {
+        _InteractCount++;
+    }
+
+    public void IncreaseKillCount()
+    {
+        _killCount++;
+    }
 }
 
