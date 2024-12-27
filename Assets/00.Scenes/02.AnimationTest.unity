@@ -223,6 +223,8 @@ MonoBehaviour:
   InteractType: 0
   _interactTimes: []
   _increaseStepTime: 0
+  Slider: {fileID: 0}
+  TargetZone: {fileID: 0}
 --- !u!1 &139646558
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +325,7 @@ MonoBehaviour:
   InteractType: 0
   _interactTimes: []
   _increaseStepTime: 0
+  Slider: {fileID: 0}
 --- !u!1 &146560648
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +426,7 @@ MonoBehaviour:
   InteractType: 0
   _interactTimes: []
   _increaseStepTime: 0
+  Slider: {fileID: 0}
 --- !u!1 &215381120
 GameObject:
   m_ObjectHideFlags: 0
