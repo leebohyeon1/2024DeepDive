@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private PlayerEventInteract _playerEventInteract;
+    private Animator _animator;
 
     [SerializeField]
     private int _maxHp = 0;
@@ -94,6 +95,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerEventInteract = GetComponent<PlayerEventInteract>();
+        _animator = GetComponent<Animator>();
 
         _curHp = _maxHp;
 
@@ -113,10 +115,16 @@ public class Player : MonoBehaviour
         if(_velocity == 1)
         {
             _spriteRenderer.flipX = true;
+            _animator.SetBool("IsMove", true);
         }
         else if(_velocity == -1)
         {
             _spriteRenderer.flipX = false;
+            _animator.SetBool("IsMove", true);
+        }
+        else
+        {
+            _animator.SetBool("IsMove", false);
         }
 
     }
