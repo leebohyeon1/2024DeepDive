@@ -3476,7 +3476,7 @@ MonoBehaviour:
   - {fileID: 1245734950}
   interactionImage: {fileID: 1450586475}
   houseTransform: {fileID: 1923589858}
-  screenOffset: {x: -160, y: -200}
+  screenOffset: {x: -0.1, y: -0.23}
   _playTimeText: {fileID: 213397334}
   _gameOverUI: {fileID: 929971062}
   _gameOverTexts:

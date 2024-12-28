@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,8 +14,8 @@ public class GameUIManager : MonoBehaviour
     private GameObject interactionImage;  
     [SerializeField] 
     private Transform houseTransform;
-    [SerializeField] private Vector2 screenOffset = new Vector2(-100f, 100f);  // 화면 우측 이미지 위치
-
+    [SerializeField] private Vector2 screenOffset = new Vector2(-0.1f, 0.1f);  // 비율로 조정 (화면 비율 기준)
+    
     [SerializeField] private TMP_Text _playTimeText;
     private Camera _mainCamera;
 
@@ -35,7 +34,6 @@ public class GameUIManager : MonoBehaviour
 
     void Start()
     {
-
         _gameOverBtns[0].onClick.AddListener(() => { RestartBtn(); });
         _gameOverBtns[1].onClick.AddListener(() => { TitleBtn(); });
 
@@ -130,8 +128,12 @@ public class GameUIManager : MonoBehaviour
         }
         else
         {
+            // 화면 해상도에 맞게 비율로 위치 조정
+            float xOffset = Screen.width * screenOffset.x;
+            float yOffset = Screen.height * screenOffset.y;
+
             interactionImage.GetComponent<RectTransform>().position =
-                new Vector2(Screen.width + screenOffset.x, Screen.height + screenOffset.y);
+                new Vector2(Screen.width + xOffset, Screen.height + yOffset);
         }
     }
 
