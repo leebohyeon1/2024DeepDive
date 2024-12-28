@@ -121,8 +121,14 @@ public class GameManager : MonoBehaviour, IListener
         };
     }
 
+    public int GetPlayTime()
+    {
+        return (int)_gameTime;
+    }
+
     // 이벤트 오브젝트 반환
     public Transform[] GetEventObjs() => _eventObjects;
+    public bool GetGameOver() => _isGameOver;
 
     public void SetWait(int index, bool boolean)
     {

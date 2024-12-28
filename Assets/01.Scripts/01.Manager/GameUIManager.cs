@@ -16,6 +16,7 @@ public class GameUIManager : MonoBehaviour
     private Transform houseTransform;
     [SerializeField] private Vector2 screenOffset = new Vector2(-100f, 100f);  // 화면 우측 이미지 위치
 
+    [SerializeField] private TMP_Text _playTimeText;
     private Camera _mainCamera;
 
     [Header("게임오버UI")]
@@ -30,6 +31,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private GameObject _optionUI;
    
+
     void Start()
     {
 
@@ -44,7 +46,17 @@ public class GameUIManager : MonoBehaviour
 
     void Update()
     {
-        if(!_optionUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        if(GameManager.Instance.GetGameOver())
+        {
+            return;
+        }
+        int totalSeconds = GameManager.Instance.GetPlayTime();
+
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        _playTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        if (!_optionUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             OpenOption();
         }
@@ -80,7 +92,6 @@ public class GameUIManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
  
-
     private void OpenOption()
     {
         Time.timeScale = 0.0f;
