@@ -10,6 +10,14 @@ public class WashDishes : InteractableObject
 
         EventManager.Instance.AddListener(EVENT_TYPE.WASH_DISHES, this);
     }
-    
-   
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveListener(EVENT_TYPE.WASH_DISHES, this);
+    }
+
+    private void OnApplicationQuit()
+    {
+        EventManager.Instance.RemoveListener(EVENT_TYPE.WASH_DISHES, this);
+    }
 }

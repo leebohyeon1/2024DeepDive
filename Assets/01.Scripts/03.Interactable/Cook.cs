@@ -11,4 +11,15 @@ public class Cook : InteractableObject
 
         EventManager.Instance.AddListener(EVENT_TYPE.COOK, this);
     }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveListener(EVENT_TYPE.COOK, this);
+    }
+
+    private void OnApplicationQuit()
+    {
+        EventManager.Instance.RemoveListener(EVENT_TYPE.COOK, this);
+    }
+
 }

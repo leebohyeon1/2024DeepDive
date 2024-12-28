@@ -20,104 +20,101 @@ public interface IListener
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
-    //=========================================================
 
     public delegate void OnEvent(EVENT_TYPE Event_, Component Sender, object Param = null);
-    private Dictionary<EVENT_TYPE, List<IListener>> Listeners =
-        new Dictionary<EVENT_TYPE, List<IListener>>();
-    //=========================================================
+    private Dictionary<EVENT_TYPE, List<IListener>> Listeners = new Dictionary<EVENT_TYPE, List<IListener>>();
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
-        else if (Instance != this)
+        else
         {
             DestroyImmediate(gameObject);
         }
     }
 
-
-    //리스트에 리스너 오브젝트 추가
+    // 리스너 추가
     public void AddListener(EVENT_TYPE Event_Type, IListener Listener)
     {
-        List<IListener> ListenList = null;
-
-        if (Listeners.TryGetValue(Event_Type, out ListenList))
+        if (Listeners.TryGetValue(Event_Type, out List<IListener> ListenList))
         {
             ListenList.Add(Listener);
-            return;
         }
-
-
-        ListenList = new List<IListener>();
-        ListenList.Add(Listener);
-        Listeners.Add(Event_Type, ListenList);
+        else
+        {
+            ListenList = new List<IListener> { Listener };
+            Listeners.Add(Event_Type, ListenList);
+        }
     }
 
-    //이벤트를 리스너에게 전달한다.
-    public void PostNotification(EVENT_TYPE Event_Type, Component Sender, object Param = null)
+    // 개별 리스너 제거
+    public void RemoveListener(EVENT_TYPE Event_Type, IListener Listener)
     {
-        List<IListener> ListenList = null;
-
-        if (!Listeners.TryGetValue(Event_Type, out ListenList)) { return; }
-
-        for (int i = 0; i < ListenList.Count; i++)
+        if (Listeners.TryGetValue(Event_Type, out List<IListener> ListenList))
         {
-            if (!ListenList[i].Equals(null))
+            ListenList.Remove(Listener);
+
+            if (ListenList.Count == 0)
             {
-                ListenList[i].OnEvent(Event_Type, Sender, Param);
+                Listeners.Remove(Event_Type);
             }
         }
     }
 
-    //이벤트 종류와 리스너 항목을 딕셔너리에서 지운다.
-    public void RemoveEvenet(EVENT_TYPE Event_Type)
+    // 모든 리스너 제거 (이벤트 타입 기준)
+    public void RemoveEvent(EVENT_TYPE Event_Type)
     {
         Listeners.Remove(Event_Type);
     }
 
-    //딕셔너리에 필요없는 항목들을 제거
-    public void RemoveRedundancies()
+    // 이벤트 전파
+    public void PostNotification(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
-        Dictionary<EVENT_TYPE, List<IListener>> TmpListeners =
-            new Dictionary<EVENT_TYPE, List<IListener>>();
-
-        foreach (KeyValuePair<EVENT_TYPE, List<IListener>> Item in Listeners)
+        if (Listeners.TryGetValue(Event_Type, out List<IListener> ListenList))
         {
-            for (int i = Item.Value.Count - 1; i >= 0; i--)
+            for (int i = ListenList.Count - 1; i >= 0; i--)
             {
-                if (Item.Value[i].Equals(null))
-                {
-                    Item.Value.RemoveAt(i);
-                }
+                ListenList[i]?.OnEvent(Event_Type, Sender, Param);
             }
-
-            if (Item.Value.Count == 0)
-            {
-                TmpListeners.Add(Item.Key, Item.Value);
-            }
-
-            Listeners = TmpListeners;
         }
     }
 
-    //씬이 변경되면 호출.
+    // 중복 제거
+    public void RemoveRedundancies()
+    {
+        List<EVENT_TYPE> keysToRemove = new List<EVENT_TYPE>();
+
+        foreach (var item in Listeners)
+        {
+            item.Value.RemoveAll(listener => listener == null);
+
+            if (item.Value.Count == 0)
+            {
+                keysToRemove.Add(item.Key);
+            }
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            Listeners.Remove(key);
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        RemoveRedundancies(); //딕셔너리 청소
+        RemoveRedundancies();
     }
 
     private void OnEnable()
     {
-        // SceneManager.sceneLoaded 이벤트에 OnSceneLoaded 메서드를 구독.
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        // SceneManager.sceneLoaded 이벤트에서 OnSceneLoaded 메서드를 구독 해제.
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
