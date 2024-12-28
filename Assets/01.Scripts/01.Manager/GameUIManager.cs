@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -104,6 +105,18 @@ public class GameUIManager : MonoBehaviour
     public void ShowInteractionIcon()
     {
         interactionImage.SetActive(true);
+
+        // 초기 상태 리셋 (스케일 초기화)
+        interactionImage.transform.localScale = Vector3.one;
+
+        // 강조 애니메이션 (살짝 커졌다가 흔들림)
+        interactionImage.transform
+            .DOScale(Vector3.one * 1.2f, 0.3f)  // 20% 커짐
+            .SetEase(Ease.OutBack)              // 부드럽게 커짐
+            .OnComplete(() =>
+            {
+                interactionImage.transform.DOShakePosition(0.3f, 10f, 20, 90f, false, true);
+            });
     }
 
     private void UpdateImagePosition()
