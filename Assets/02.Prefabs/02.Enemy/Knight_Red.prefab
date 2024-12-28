@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f5527e73f603a4e984ce8363b5a4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 3
-  _moveSpeed: 4
+  _maxHp: 4
+  _moveSpeed: 8
   _attackDamage: 1
   _deathForce: 40
   _torqueAngle: 30
