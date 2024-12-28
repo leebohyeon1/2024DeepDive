@@ -32,6 +32,8 @@ public class TitleUIManager : MonoBehaviour
 
         // 타이틀 둥실둥실 떠다니는 애니메이션 시작
         StartFloatingAnimation();
+
+        Time.timeScale = 1.0f;
     }
 
     private void Update()

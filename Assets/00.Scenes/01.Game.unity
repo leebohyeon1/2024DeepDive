@@ -258,10 +258,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 793306d4f75e57746a6772b1eca2ed69, type: 3}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -4341,7 +4341,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4b4b662deb9d6e24989547afd7b2afe8, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -6144,7 +6144,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8971,13 +8971,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 04a113989d6b6064a80841e0d060a8f2, type: 3}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &2145244588
@@ -9052,14 +9052,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 904892595}
     m_Modifications:
-    - target: {fileID: 2549241760954030446, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241760954030446, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2549241761396542505, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9147,38 +9139,6 @@ PrefabInstance:
     - target: {fileID: 2549241761396542677, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
       propertyPath: m_Name
       value: Option
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241761441089528, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241761441089528, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241761441089528, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241761826558900, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241761826558900, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241762501297232, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241762501297232, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2549241762501297232, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 204a6c2a1809dae44b09ba9e25014f26, type: 3}
@@ -9421,14 +9381,6 @@ PrefabInstance:
     - target: {fileID: 268193823, guid: 17b6f3ed67e904e409e7d50726f8f2af, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 828360549, guid: 17b6f3ed67e904e409e7d50726f8f2af, type: 3}
-      propertyPath: _targetHoldTime
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7512721251271947587, guid: 17b6f3ed67e904e409e7d50726f8f2af, type: 3}
-      propertyPath: _maxHp
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7512721251271947590, guid: 17b6f3ed67e904e409e7d50726f8f2af, type: 3}
       propertyPath: m_RootOrder
