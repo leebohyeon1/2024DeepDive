@@ -216,6 +216,7 @@ public class Player : MonoBehaviour, IListener
         _isAttack = true;
         _rb.velocity = Vector2.zero;
         _animator.SetTrigger("Attack");
+        AudioManager.Instance.PlaySFX("Fire1");
     }
 
     public void Attack()
@@ -225,7 +226,7 @@ public class Player : MonoBehaviour, IListener
         _fireAnimator.transform.localPosition = new Vector2((_spriteRenderer.flipX ? 2.8f : -2.8f), firePos.y);
         
         _fireAnimator.SetTrigger("Fire");
- 
+        AudioManager.Instance.PlaySFX("Fire");
 
         Vector3 attackPosition = transform.position + new Vector3((_spriteRenderer.flipX ? 1 : -1) * (_attackRange.x / 2), 0f);
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPosition, _attackRange, 0, _enemyLayer);
