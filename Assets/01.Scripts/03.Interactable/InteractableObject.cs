@@ -12,6 +12,8 @@ public class InteractTime
 
 public class InteractableObject : MonoBehaviour, IListener
 {
+    private Animator _animator;
+
     public int InteractType = 0;
 
     [SerializeField] private InteractTime[] _interactTimes;
@@ -37,6 +39,8 @@ public class InteractableObject : MonoBehaviour, IListener
         SetEventTime();
         Slider.gameObject.SetActive(false);
         EventManager.Instance.AddListener(EVENT_TYPE.GAME_OVER, this);
+
+        _animator = GetComponent<Animator>();
     }
 
     protected virtual void Update()
@@ -76,6 +80,7 @@ public class InteractableObject : MonoBehaviour, IListener
         _canInteract = true;
         _waiting = true;
         _waitTimer = 0f;
+        _animator.SetBool("Event",true);
 
         GameManager.Instance.SetWait(InteractType, true);
     }
@@ -110,6 +115,7 @@ public class InteractableObject : MonoBehaviour, IListener
         _waiting = false;
         Slider.gameObject.SetActive(false);
 
+        _animator.SetBool("Event", false);
         GameManager.Instance.SetWait(InteractType, false);
     }
 
@@ -120,7 +126,7 @@ public class InteractableObject : MonoBehaviour, IListener
         _waiting = false;
         _canInteract = false;
 
-
+        _animator.SetBool("Event", false);
         GameManager.Instance.SetWait(InteractType, false);
         EventManager.Instance.PostNotification(EVENT_TYPE.STOP_INTERACT, this);
     }
