@@ -251,6 +251,7 @@ public class Player : MonoBehaviour, IListener
 
         if (_curHp == 0)
         {
+            _hpBar.value = 0.0f;
             EventManager.Instance.PostNotification(EVENT_TYPE.GAME_OVER, this);
         }
     }

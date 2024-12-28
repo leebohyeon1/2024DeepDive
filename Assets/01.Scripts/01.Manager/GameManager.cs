@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour, IListener
     // 이벤트 리스너 (게임 오버 이벤트 처리)
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
-            GameOver();
+        GameOver();
     }
 
     // 게임 오버 처리
@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour, IListener
 
         if (_princessAngryRate >= 100)
         {
+            _gameUIManager.GameSliders[1].value = 1.0f;
             GameOver();
         }
     }
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour, IListener
 
         if (_curHouseHp == 0)
         {
+            _gameUIManager.GameSliders[0].value = 0.0f;
             GameOver();
         }
     }
