@@ -43,7 +43,7 @@ public class OptionManager : MonoBehaviour
     private void ExitOption()
     {
         Time.timeScale = 1.0f;
-
+        AudioManager.Instance.PlaySFX("ClickSound");
         gameObject.SetActive(false);
 
         AudioManager.Instance.SaveAudioSettings();

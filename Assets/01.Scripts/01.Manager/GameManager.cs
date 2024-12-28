@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour, IListener
     {
         EventManager.Instance.AddListener(EVENT_TYPE.GAME_OVER, this);
         _curHouseHp = _houseHp;
+
+        AudioManager.Instance.PlayBGM("BGM");
         Time.timeScale = 1.0f;
     }
 

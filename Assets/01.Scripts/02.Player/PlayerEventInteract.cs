@@ -151,6 +151,7 @@ public class PlayerEventInteract : MonoBehaviour
     {
         slider.gameObject.SetActive(false);
         IsInteract = false;
+        AudioManager.Instance.PlaySFX("Action_Success");
         GameManager.Instance.IncreaseInteractCount();
         EventManager.Instance.PostNotification(eventType, this);
         EventManager.Instance.PostNotification(EVENT_TYPE.STOP_INTERACT, this);

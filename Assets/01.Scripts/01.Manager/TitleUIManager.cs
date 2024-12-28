@@ -21,6 +21,9 @@ public class TitleUIManager : MonoBehaviour
         _startBtn.onClick.AddListener(() => { StartGame(); });
         _optionBtn.onClick.AddListener(() => { OpenOption(); });
         _exitBtn.onClick.AddListener(() => { Exit(); });
+
+        AudioManager.Instance.PlayBGM("Title");
+
     }
 
     private void Update()
@@ -33,16 +36,19 @@ public class TitleUIManager : MonoBehaviour
 
     private void StartGame()
     {
+        AudioManager.Instance.PlaySFX("ClickSound");
         SceneManager.LoadScene(1);
     }
 
     private void OpenOption()
     {
+        AudioManager.Instance.PlaySFX("ClickSound");
         _option.SetActive(true);
     }
 
     private void Exit()
     {
+        AudioManager.Instance.PlaySFX("ClickSound");
         Application.Quit();
     }
 

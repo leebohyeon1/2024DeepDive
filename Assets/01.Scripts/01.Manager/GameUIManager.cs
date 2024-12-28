@@ -84,17 +84,20 @@ public class GameUIManager : MonoBehaviour
 
     private void RestartBtn()
     {
+        AudioManager.Instance.PlaySFX("ClickSound");
         SceneManager.LoadScene(1);
     }
 
     private void TitleBtn()
     {
+        AudioManager.Instance.PlaySFX("ClickSound");
         SceneManager.LoadScene(0);
     }
  
     private void OpenOption()
     {
         Time.timeScale = 0.0f;
+        AudioManager.Instance.PlaySFX("ClickSound");
         _optionUI.SetActive(true);
     }
 

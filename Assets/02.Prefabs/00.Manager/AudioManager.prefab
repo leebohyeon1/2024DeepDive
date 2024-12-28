@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bgmSource: {fileID: 0}
-  _bgmClips: []
+  _bgmClips:
+  - {fileID: 8300000, guid: ecd13c9bfb58f56409a0e844bab06e7b, type: 3}
+  - {fileID: 8300000, guid: 6484a051549d41a42b67c656ccec6801, type: 3}
   _sfxSourceCount: 5
-  _sfxClips: []
+  _sfxClips:
+  - {fileID: 8300000, guid: 8615de954ed1abd47be40806a2cc0ee0, type: 3}
+  - {fileID: 8300000, guid: 506a05e042f8ae14aa0cf5d34398f6ea, type: 3}
+  - {fileID: 8300000, guid: ca2429b52e78d3541b1d445d3bd48c2b, type: 3}
+  - {fileID: 8300000, guid: 0522efc285645354988f149fc97e4ca8, type: 3}
