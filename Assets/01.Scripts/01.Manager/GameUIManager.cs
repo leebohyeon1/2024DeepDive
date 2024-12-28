@@ -104,6 +104,8 @@ public class GameUIManager : MonoBehaviour
     {
         interactionImage.SetActive(true);
 
+        AudioManager.Instance.PlaySFX("Honey");
+
         // 초기 상태 리셋 (스케일 초기화)
         interactionImage.transform.localScale = Vector3.one;
 
