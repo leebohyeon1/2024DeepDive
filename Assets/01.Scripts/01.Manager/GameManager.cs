@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour, IListener
     private float _gameTime;
 
     private bool _isGameOver = false;
+    private bool[] _isWait = new bool[3];
 
     private void Awake()
     {
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour, IListener
     // 이벤트 리스너 (게임 오버 이벤트 처리)
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
-        GameOver();
+            GameOver();
     }
 
     // 게임 오버 처리
@@ -120,4 +121,31 @@ public class GameManager : MonoBehaviour, IListener
 
     // 이벤트 오브젝트 반환
     public Transform[] GetEventObjs() => _eventObjects;
+
+    public void SetWait(int index, bool boolean)
+    {
+        _isWait[index] = boolean;
+        CheckWait();
+    }
+
+    private void CheckWait()
+    {
+        bool flag = false;
+        foreach(bool isWait in _isWait)
+        {
+            if(isWait)
+            {
+                flag = true;
+            }
+        }
+
+        if(flag)
+        {
+            _gameUIManager.ShowInteractionIcon();
+        }
+        else
+        {
+            _gameUIManager.HideInteractionIcon();
+        }
+    }
 }

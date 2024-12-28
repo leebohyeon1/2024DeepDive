@@ -193,6 +193,9 @@ MonoBehaviour:
   _maxHp: 0
   _moveSpeed: 2
   _attackDamage: 1
+  _deathForce: 40
+  _torqueAngle: 30
+  _destroyDelay: 3
   _attackRange: 14.96
   _attackCooldown: 5
   _projectile: {fileID: 2759214341053310424, guid: 1f4091e495ac2824bb3b0e34fff32ac2, type: 3}

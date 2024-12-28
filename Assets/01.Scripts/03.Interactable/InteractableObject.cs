@@ -77,7 +77,7 @@ public class InteractableObject : MonoBehaviour, IListener
         _waiting = true;
         _waitTimer = 0f;
 
-        Debug.Log($"{name} 이벤트 발동");
+        GameManager.Instance.SetWait(InteractType, true);
     }
 
     // WaitTime 처리
@@ -109,6 +109,8 @@ public class InteractableObject : MonoBehaviour, IListener
         _canInteract = false;
         _waiting = false;
         Slider.gameObject.SetActive(false);
+
+        GameManager.Instance.SetWait(InteractType, false);
     }
 
     // 이벤트 실패 처리 (시간 초과)
@@ -118,6 +120,8 @@ public class InteractableObject : MonoBehaviour, IListener
         _waiting = false;
         _canInteract = false;
 
+
+        GameManager.Instance.SetWait(InteractType, false);
         EventManager.Instance.PostNotification(EVENT_TYPE.STOP_INTERACT, this);
     }
 

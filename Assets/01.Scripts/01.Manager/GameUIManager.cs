@@ -7,9 +7,18 @@ using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
+    [Header("게임UI")]
     [SerializeField]
     public Slider[] GameSliders;
+    [SerializeField] 
+    private GameObject interactionImage;  
+    [SerializeField] 
+    private Transform houseTransform;
+    [SerializeField] private Vector2 screenOffset = new Vector2(-100f, 100f);  // 화면 우측 이미지 위치
 
+    private Camera _mainCamera;
+
+    [Header("게임오버UI")]
     [SerializeField]
     private GameObject _gameOverUI;
     [SerializeField]
@@ -17,6 +26,7 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private Button[] _gameOverBtns;
 
+    [Header("옵션UI")]
     [SerializeField]
     private GameObject _optionUI;
    
@@ -28,6 +38,8 @@ public class GameUIManager : MonoBehaviour
 
         _gameOverUI.SetActive(false);
         _optionUI.SetActive(false);
+
+        _mainCamera = Camera.main;
     }
 
     void Update()
@@ -35,6 +47,11 @@ public class GameUIManager : MonoBehaviour
         if(!_optionUI.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
             OpenOption();
+        }
+
+        if (interactionImage.activeSelf)
+        {
+            UpdateImagePosition();
         }
     }
 
@@ -62,11 +79,37 @@ public class GameUIManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
+ 
 
     private void OpenOption()
     {
         Time.timeScale = 0.0f;
         _optionUI.SetActive(true);
+    }
+
+    public void ShowInteractionIcon()
+    {
+        interactionImage.SetActive(true);
+    }
+
+    private void UpdateImagePosition()
+    {
+        Vector3 houseScreenPos = _mainCamera.WorldToScreenPoint(houseTransform.position);
+
+        if (houseScreenPos.z > 0 && houseScreenPos.x >= 0 && houseScreenPos.x <= Screen.width)
+        {
+            interactionImage.GetComponent<RectTransform>().position =
+                (Vector2)houseScreenPos;
+        }
+        else
+        {
+            interactionImage.GetComponent<RectTransform>().position =
+                new Vector2(Screen.width + screenOffset.x, Screen.height + screenOffset.y);
+        }
+    }
+
+    public void HideInteractionIcon()
+    {
+        interactionImage.SetActive(false);
     }
 }

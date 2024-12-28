@@ -22,6 +22,11 @@ public class Wizard : Enemy
 
     protected override void Update()
     {
+        if(_isDead)
+        {
+            return;
+        }
+        
         CheckAttackCondition();
     }
 
@@ -57,6 +62,8 @@ public class Wizard : Enemy
     {
         if (_projectile != null && _firePoint != null)
         {
+            _animator.SetTrigger("Attack");
+
             GameObject newProjectile = Instantiate(_projectile, _firePoint.position, Quaternion.identity);
 
             newProjectile.GetComponent<FireBall>().InitialBall(_attackDamage);

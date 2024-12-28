@@ -19,6 +19,8 @@ public class Player : MonoBehaviour, IListener
     [SerializeField] private Vector2 _attackRange;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] private Animator _fireAnimator;
+    [SerializeField] private SpriteRenderer _fireSprite;
 
     private float _lastAttackTime = 0f;
     private bool _canInteract = false;
@@ -214,6 +216,16 @@ public class Player : MonoBehaviour, IListener
         _isAttack = true;
         _rb.velocity = Vector2.zero;
         _animator.SetTrigger("Attack");
+    }
+
+    public void Attack()
+    {
+        _fireSprite.flipX = _spriteRenderer.flipX ? true : false;
+        Vector3 firePos = _fireAnimator.gameObject.transform.localPosition;
+        _fireAnimator.transform.localPosition = new Vector2((_spriteRenderer.flipX ? 2.8f : -2.8f), firePos.y);
+        
+        _fireAnimator.SetTrigger("Fire");
+ 
 
         Vector3 attackPosition = transform.position + new Vector3((_spriteRenderer.flipX ? 1 : -1) * (_attackRange.x / 2), 0f);
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPosition, _attackRange, 0, _enemyLayer);
